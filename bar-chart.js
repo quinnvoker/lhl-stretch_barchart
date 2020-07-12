@@ -26,7 +26,6 @@ const createBars = function(data, options, element) {
       'text-align': 'center',
       'border': '1px solid black',
     });
-    bar.width = 200;
     bars.push(bar);
   }
   return bars;
