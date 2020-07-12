@@ -1,5 +1,5 @@
 const defaultOptions = {
-  unitHeight: 20,
+  pixelsPerUnit: 20,
 }
 
 $(document).ready(function() {
@@ -21,7 +21,7 @@ const createBars = function (data, options, element) {
       'bottom': 0,
       'left': barWidth * i,
       'width': barWidth,
-      'height': options.unitHeight * currentData,
+      'height': options.pixelsPerUnit * currentData,
       'text-align': 'center',
       'border': '1px solid black',
     });
