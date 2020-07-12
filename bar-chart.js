@@ -1,5 +1,5 @@
 const defaultOptions = {
-  unitHeight: 20,
+  pixelsPerUnit: 20,
   spacing: 20,
 }
 
@@ -7,11 +7,11 @@ $(document).ready(function() {
   drawBarChart([1, 2, 3, 4, 5], defaultOptions, $('.bar-chart'));
 });
 
-const drawBarChart= function(data, options, element) {
+const drawBarChart = function(data, options, element) {
   element.append(createBars(data, options, element));
 }
 
-const createBars = function (data, options, element) {
+const createBars = function(data, options, element) {
   let bars = [];
   const barWidth = (element.width() - options.spacing * data.length) / data.length;
   for(let i = 0; i < data.length; i++) {
@@ -22,7 +22,7 @@ const createBars = function (data, options, element) {
       'bottom': 0,
       'left': options.spacing + options.spacing * i + barWidth * i,
       'width': barWidth,
-      'height': options.unitHeight * currentData,
+      'height': options.pixelsPerUnit * currentData,
       'text-align': 'center',
       'border': '1px solid black',
     });
