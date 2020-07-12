@@ -1,5 +1,6 @@
 const defaultOptions = {
-  pixelsPerUnit: 20,
+  unitHeight: 20,
+  spacing: 20,
 }
 
 $(document).ready(function() {
@@ -12,16 +13,16 @@ const drawBarChart= function(data, options, element) {
 
 const createBars = function (data, options, element) {
   let bars = [];
-  const barWidth = element.width() / data.length;
+  const barWidth = (element.width() - options.spacing * data.length) / data.length;
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
     let bar = $('<div class="bar">' + currentData + '</div>');
     bar.css({
       'position': 'absolute',
       'bottom': 0,
-      'left': barWidth * i,
+      'left': options.spacing + options.spacing * i + barWidth * i,
       'width': barWidth,
-      'height': options.pixelsPerUnit * currentData,
+      'height': options.unitHeight * currentData,
       'text-align': 'center',
       'border': '1px solid black',
     });
