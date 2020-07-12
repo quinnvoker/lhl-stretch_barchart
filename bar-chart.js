@@ -1,5 +1,9 @@
+const defaultOptions = {
+  unitHeight: 20,
+}
+
 $(document).ready(function() {
-  drawBarChart([1, 2, 3, 4, 5], {}, $('.bar-chart'));
+  drawBarChart([1, 2, 3, 4, 5], defaultOptions, $('.bar-chart'));
 });
 
 const drawBarChart= function(data, options, element) {
@@ -17,6 +21,9 @@ const createBars = function (data, options, element) {
       'bottom': 0,
       'left': barWidth * i,
       'width': barWidth,
+      'height': options.unitHeight * currentData,
+      'text-align': 'center',
+      'border': '1px solid black',
     });
     bar.width = 200;
     bars.push(bar);
