@@ -40,15 +40,12 @@ const createValueLabel = function(bar, value, options) {
     'margin': 0,
     'width': bar.width(),
   });
-    /*
-    assign value display alignment
-    works, but 'middle' case does not actually center the text properly
-    */
   switch(options.valueAlignment) {
     case 'bottom':
       barValueLabel.css('bottom', 0);
       break;
     case 'middle':
+      // currently centers text from the top, causing noticeable misalignment
       barValueLabel.css('top', '50%');
       break;
     case 'top':
