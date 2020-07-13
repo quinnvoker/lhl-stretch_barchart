@@ -2,6 +2,7 @@ const defaultOptions = {
   pixelsPerUnit: 20,
   spacing: 20,
   valueAlignment: 'top',
+  barColor: 'gray',
 }
 
 $(document).ready(function() {
@@ -26,6 +27,7 @@ const createBars = function(data, options, element) {
       'height': options.pixelsPerUnit * currentData,
       'text-align': 'center',
       'border': '1px solid black',
+      'background-color': options.barColor,
     });
     bar.append(createValueLabel(bar, currentData, options));
     bars.push(bar);
