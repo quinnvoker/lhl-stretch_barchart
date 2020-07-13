@@ -19,16 +19,17 @@ const createBars = function(data, options, element) {
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
     let bar = $('<div class="bar"></div>');
+    const barHeight = options.pixelsPerUnit * currentData;
     bar.css({
       'position': 'absolute',
       'bottom': 0,
       'left': options.spacing + options.spacing * i + barWidth * i,
       'width': barWidth,
-      'height': options.pixelsPerUnit * currentData,
       'text-align': 'center',
       'border': '1px solid black',
       'background-color': options.barColor,
     });
+    bar.animate({'height': barHeight});
     bar.append(createValueLabel(bar, currentData, options));
     bars.push(bar);
   }
