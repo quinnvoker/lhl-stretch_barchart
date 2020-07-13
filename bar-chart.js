@@ -1,6 +1,7 @@
 const defaultOptions = {
   pixelsPerUnit: 20,
   spacing: 20,
+  valueAlignment: 'top',
 }
 
 $(document).ready(function() {
@@ -16,7 +17,7 @@ const createBars = function(data, options, element) {
   const barWidth = (element.width() - options.spacing * data.length) / data.length;
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
-    let bar = $('<div class="bar">' + currentData + '</div>');
+    let bar = $('<div class="bar"></div>');
     bar.css({
       'position': 'absolute',
       'bottom': 0,
@@ -26,7 +27,33 @@ const createBars = function(data, options, element) {
       'text-align': 'center',
       'border': '1px solid black',
     });
+    bar.append(createValueLabel(bar, currentData, options));
     bars.push(bar);
   }
   return bars;
+}
+
+const createValueLabel = function(bar, value, options) {
+  let barValueLabel = $('<p>' + value + '</p>');
+  barValueLabel.css({
+    'position': 'absolute',
+    'margin': 0,
+    'width': bar.width(),
+  });
+    /*
+    assign value display alignment
+    works, but 'middle' case does not actually center the text properly
+    */
+  switch(options.valueAlignment) {
+    case 'bottom':
+      barValueLabel.css('bottom', 0);
+      break;
+    case 'middle':
+      barValueLabel.css('top', '50%');
+      break;
+    case 'top':
+    default:
+      barValueLabel.css('top', 0);
+  }
+  return barValueLabel;
 }
