@@ -18,26 +18,22 @@ const drawBarChart = function(data, options, element) {
   let labels = []
   for(let i = 0; i < data.length; i++){
     bars.push(createBar(data[i], options, i));
+    labels.push(createLabel(data[i], options, i));
   }
   element.append(bars);
+  element.append(labels);
 }
 
-const createLabels = function(data, options, itemWidth) {
-  let labels = $('<div class="label-area"></div>');
-  for(let i = 0; i < data.length; i++) {
-    const currentData = data[i];
-    let label = $('<div class="label"></div>');
-    label.css({
-      'position': 'absolute',
-      'bottom': 0,
-      'left': options.spacing + options.spacing * i + itemWidth * i,
-      'width': itemWidth,
-      'text-align': 'center',
-    });
-    label.append(currentData);
-    labels.append(label);
-  }
-  return labels;
+const createLabel = function(data, options, index) {
+  const currentData = data;
+  let label = $('<div class="label"></div>');
+  label.css({
+    'grid-column': index + 1,
+    'grid-row': 2,
+    'text-align': 'center',
+  });
+  label.append(currentData);
+  return label;
 }
 
 const createBar = function(data, options, index){
