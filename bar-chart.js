@@ -9,14 +9,17 @@ const dummyData = [
   {
     label: 'Water',
     value: 4,
+    barColor: 'blue',
   },
   {
     label: 'Earth',
     value: 10,
+    barColor: 'green',
   },
   {
     label: 'Fire',
     value: 15,
+    barColor: 'red',
   },
   {
     label: 'Air',
@@ -66,7 +69,7 @@ const createBar = function(data, options, index){
     'display': 'flex',
     'justify-content': 'center',
     'border': '1px solid black',
-    'background-color': options.barColor,
+    'background-color': data.barColor ? data.barColor : options.barColor,
   });
   // set vertical alignment of value label
   switch(options.valueAlignment) {
