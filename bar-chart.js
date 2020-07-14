@@ -1,7 +1,7 @@
 const defaultOptions = {
   pixelsPerUnit: 20,
   spacing: 20,
-  valueAlignment: 'bottom',
+  valueAlignment: 'middle',
   barColor: 'gray',
 }
 
@@ -12,9 +12,9 @@ $(document).ready(function() {
 const drawBarChart = function(data, options, element) {
   element.css({
     'display': 'grid',
+    'column-gap': options.spacing,
   });
-  const barWidth = (element.width() - options.spacing * data.length) / data.length;
-  let bars = createBars(data, options, barWidth);
+  let bars = createBars(data, options);
   element.append(bars);
 }
 
@@ -36,7 +36,7 @@ const createLabels = function(data, options, itemWidth) {
   return labels;
 }
 
-const createBars = function(data, options, itemWidth) {
+const createBars = function(data, options) {
   let bars = [];
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
