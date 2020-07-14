@@ -6,7 +6,7 @@ const defaultOptions = {
 }
 
 $(document).ready(function() {
-  drawBarChart([1, 2, 3, 4, 5], defaultOptions, $('.bar-chart'));
+  drawBarChart([1, 2, 3, 4, 5, 16, 23], defaultOptions, $('.bar-chart'));
 });
 
 const drawBarChart = function(data, options, element) {
@@ -18,8 +18,9 @@ const createBars = function(data, options, element) {
   const barWidth = (element.width() - options.spacing * data.length) / data.length;
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
-    let bar = $('<div class="bar"></div>');
     const barHeight = options.pixelsPerUnit * currentData;
+    let bar = $('<div class="bar"></div>');
+    bar.append($('<p>' + currentData + '</p>'));
     bar.css({
       'display': 'flex',
       'justify-content': 'center',
@@ -35,7 +36,6 @@ const createBars = function(data, options, element) {
         bar.css('align-items', 'flex-end');
         break;
       case 'middle':
-        // currently centers text from the top, causing noticeable misalignment
         bar.css('align-items', 'center');
         break;
       case 'top':
@@ -43,19 +43,7 @@ const createBars = function(data, options, element) {
         bar.css('align-items', 'flex-start');
     }
     bar.animate({'height': barHeight});
-    bar.append(createValueLabel(bar, currentData, options));
     bars.push(bar);
   }
   return bars;
-}
-
-const createValueLabel = function(bar, value, options) {
-  let barValueLabel = $('<p>' + value + '</p>');
-  barValueLabel.css({
-    'position': 'absolute',
-    'margin': 0,
-    // 'width': bar.width(),
-  });
-
-  return barValueLabel;
 }
