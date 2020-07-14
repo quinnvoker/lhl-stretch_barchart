@@ -10,12 +10,12 @@ $(document).ready(function() {
 });
 
 const drawBarChart = function(data, options, element) {
-  element.append(createBars(data, options, element));
+  const barWidth = (element.width() - options.spacing * data.length) / data.length;
+  element.append(createBars(data, options, barWidth));
 }
 
-const createBars = function(data, options, element) {
+const createBars = function(data, options, width) {
   let bars = [];
-  const barWidth = (element.width() - options.spacing * data.length) / data.length;
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
     const barHeight = options.pixelsPerUnit * currentData;
@@ -26,8 +26,8 @@ const createBars = function(data, options, element) {
       'justify-content': 'center',
       'position': 'absolute',
       'bottom': 0,
-      'left': options.spacing + options.spacing * i + barWidth * i,
-      'width': barWidth,
+      'left': options.spacing + options.spacing * i + width * i,
+      'width': width,
       'border': '1px solid black',
       'background-color': options.barColor,
     });
