@@ -1,8 +1,9 @@
 const defaultOptions = {
   pixelsPerUnit: 20,
-  spacing: 20,
+  spacing: 50,
   valueAlignment: 'middle',
-  barColor: 'gray',
+  barColor: 'grey',
+  labelColor: 'grey',
 }
 
 const dummyData = [
@@ -24,6 +25,7 @@ const dummyData = [
   {
     label: 'Air',
     value: 1,
+    labelColor: 'red',
   }
 ]
 
@@ -52,6 +54,7 @@ const createLabel = function(data, options, index) {
     'grid-column': index + 1,
     'grid-row': 2,
     'text-align': 'center',
+    'color': data.labelColor ? data.labelColor : options.labelColor,
   });
   label.append(data.label);
   return label;
