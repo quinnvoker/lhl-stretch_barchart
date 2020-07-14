@@ -46,6 +46,8 @@ const createBars = function(data, options, itemWidth) {
     bar.css({
       'grid-column': i + 1,
       'grid-row': 1,
+      'align-self': 'end',
+      'height': barHeight,
       'display': 'flex',
       'justify-content': 'center',
       'border': '1px solid black',
@@ -65,7 +67,6 @@ const createBars = function(data, options, itemWidth) {
     }
     // add value label
     bar.append($('<p>' + currentData + '</p>').css('margin', 0));
-    bar.animate({'height': barHeight});
     bars.push(bar);
   }
   return bars;
