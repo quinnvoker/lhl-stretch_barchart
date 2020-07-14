@@ -10,12 +10,12 @@ $(document).ready(function() {
 });
 
 const drawBarChart = function(data, options, element) {
+  element.css({
+    'display': 'grid',
+  });
   const barWidth = (element.width() - options.spacing * data.length) / data.length;
-  // add bar area
-  let labels = createLabels(data, options, barWidth);
   let bars = createBars(data, options, barWidth);
   element.append(bars);
-  element.append(labels);
 }
 
 const createLabels = function(data, options, itemWidth) {
@@ -37,19 +37,17 @@ const createLabels = function(data, options, itemWidth) {
 }
 
 const createBars = function(data, options, itemWidth) {
-  let bars = $('<div class="bar-area"></div>');
+  let bars = [];
   for(let i = 0; i < data.length; i++) {
     const currentData = data[i];
     const barHeight = options.pixelsPerUnit * currentData;
     let bar = $('<div class="bar"></div>');
     // set up bar formatting
     bar.css({
+      'grid-column': i + 1,
+      'grid-row': 1,
       'display': 'flex',
       'justify-content': 'center',
-      'position': 'absolute',
-      'bottom': 0,
-      'left': options.spacing + options.spacing * i + itemWidth * i,
-      'width': itemWidth,
       'border': '1px solid black',
       'background-color': options.barColor,
     });
@@ -68,7 +66,7 @@ const createBars = function(data, options, itemWidth) {
     // add value label
     bar.append($('<p>' + currentData + '</p>').css('margin', 0));
     bar.animate({'height': barHeight});
-    bars.append(bar);
+    bars.push(bar);
   }
   return bars;
 }
