@@ -14,7 +14,11 @@ const drawBarChart = function(data, options, element) {
     'display': 'grid',
     'column-gap': options.spacing,
   });
-  let bars = createBars(data, options);
+  let bars = []
+  let labels = []
+  for(let i = 0; i < data.length; i++){
+    bars.push(createBar(data[i], options, i));
+  }
   element.append(bars);
 }
 
@@ -36,38 +40,33 @@ const createLabels = function(data, options, itemWidth) {
   return labels;
 }
 
-const createBars = function(data, options) {
-  let bars = [];
-  for(let i = 0; i < data.length; i++) {
-    const currentData = data[i];
-    const barHeight = options.pixelsPerUnit * currentData;
-    let bar = $('<div class="bar"></div>');
-    // set up bar formatting
-    bar.css({
-      'grid-column': i + 1,
-      'grid-row': 1,
-      'align-self': 'end',
-      'height': barHeight,
-      'display': 'flex',
-      'justify-content': 'center',
-      'border': '1px solid black',
-      'background-color': options.barColor,
-    });
-    // set vertical alignment of value label
-    switch(options.valueAlignment) {
-      case 'bottom':
-        bar.css('align-items', 'flex-end');
-        break;
-      case 'middle':
-        bar.css('align-items', 'center');
-        break;
-      case 'top':
-      default:
-        bar.css('align-items', 'flex-start');
-    }
-    // add value label
-    bar.append($('<p>' + currentData + '</p>').css('margin', 0));
-    bars.push(bar);
+const createBar = function(data, options, index){
+  const barHeight = options.pixelsPerUnit * data;
+  let bar = $('<div class="bar"></div>');
+  // set up bar formatting
+  bar.css({
+    'grid-column': index + 1,
+    'grid-row': 1,
+    'align-self': 'end',
+    'height': barHeight,
+    'display': 'flex',
+    'justify-content': 'center',
+    'border': '1px solid black',
+    'background-color': options.barColor,
+  });
+  // set vertical alignment of value label
+  switch(options.valueAlignment) {
+    case 'bottom':
+      bar.css('align-items', 'flex-end');
+      break;
+    case 'middle':
+      bar.css('align-items', 'center');
+      break;
+    case 'top':
+    default:
+      bar.css('align-items', 'flex-start');
   }
-  return bars;
+  // add value label
+  bar.append($('<p>' + data + '</p>').css('margin', 0));
+  return bar;
 }
