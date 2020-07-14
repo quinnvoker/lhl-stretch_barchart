@@ -5,8 +5,27 @@ const defaultOptions = {
   barColor: 'gray',
 }
 
+const dummyData = [
+  {
+    label: 'Water',
+    value: 4,
+  },
+  {
+    label: 'Earth',
+    value: 10,
+  },
+  {
+    label: 'Fire',
+    value: 15,
+  },
+  {
+    label: 'Air',
+    value: 1,
+  }
+]
+
 $(document).ready(function() {
-  drawBarChart([1, 2, 3, 4, 5, 16, 23], defaultOptions, $('.bar-chart'));
+  drawBarChart(dummyData, defaultOptions, $('.bar-chart'));
 });
 
 const drawBarChart = function(data, options, element) {
@@ -25,19 +44,18 @@ const drawBarChart = function(data, options, element) {
 }
 
 const createLabel = function(data, options, index) {
-  const currentData = data;
   let label = $('<div class="label"></div>');
   label.css({
     'grid-column': index + 1,
     'grid-row': 2,
     'text-align': 'center',
   });
-  label.append(currentData);
+  label.append(data.label);
   return label;
 }
 
 const createBar = function(data, options, index){
-  const barHeight = options.pixelsPerUnit * data;
+  const barHeight = options.pixelsPerUnit * data.value;
   let bar = $('<div class="bar"></div>');
   // set up bar formatting
   bar.css({
@@ -63,6 +81,6 @@ const createBar = function(data, options, index){
       bar.css('align-items', 'flex-start');
   }
   // add value label
-  bar.append($('<p>' + data + '</p>').css('margin', 0));
+  bar.append($('<p>' + data.value + '</p>').css('margin', 0));
   return bar;
 }
