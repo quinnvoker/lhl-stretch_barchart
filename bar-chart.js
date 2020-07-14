@@ -1,7 +1,7 @@
 const defaultOptions = {
   pixelsPerUnit: 20,
   spacing: 20,
-  valueAlignment: 'top',
+  valueAlignment: 'middle',
   barColor: 'gray',
 }
 
@@ -21,14 +21,27 @@ const createBars = function(data, options, element) {
     let bar = $('<div class="bar"></div>');
     const barHeight = options.pixelsPerUnit * currentData;
     bar.css({
+      'display': 'flex',
+      'justify-content': 'center',
       'position': 'absolute',
       'bottom': 0,
       'left': options.spacing + options.spacing * i + barWidth * i,
       'width': barWidth,
-      'text-align': 'center',
       'border': '1px solid black',
       'background-color': options.barColor,
     });
+    switch(options.valueAlignment) {
+      case 'bottom':
+        bar.css('align-items', 'flex-end');
+        break;
+      case 'middle':
+        // currently centers text from the top, causing noticeable misalignment
+        bar.css('align-items', 'center');
+        break;
+      case 'top':
+      default:
+        bar.css('align-items', 'flex-start');
+    }
     bar.animate({'height': barHeight});
     bar.append(createValueLabel(bar, currentData, options));
     bars.push(bar);
@@ -41,19 +54,8 @@ const createValueLabel = function(bar, value, options) {
   barValueLabel.css({
     'position': 'absolute',
     'margin': 0,
-    'width': bar.width(),
+    // 'width': bar.width(),
   });
-  switch(options.valueAlignment) {
-    case 'bottom':
-      barValueLabel.css('bottom', 0);
-      break;
-    case 'middle':
-      // currently centers text from the top, causing noticeable misalignment
-      barValueLabel.css('top', '50%');
-      break;
-    case 'top':
-    default:
-      barValueLabel.css('top', 0);
-  }
+
   return barValueLabel;
 }
