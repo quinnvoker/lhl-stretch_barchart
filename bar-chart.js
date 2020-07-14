@@ -1,7 +1,7 @@
 const defaultOptions = {
   pixelsPerUnit: 20,
   spacing: 20,
-  valueAlignment: 'middle',
+  valueAlignment: 'bottom',
   barColor: 'gray',
 }
 
@@ -20,7 +20,7 @@ const createBars = function(data, options, element) {
     const currentData = data[i];
     const barHeight = options.pixelsPerUnit * currentData;
     let bar = $('<div class="bar"></div>');
-    bar.append($('<p>' + currentData + '</p>'));
+    // set up bar formatting
     bar.css({
       'display': 'flex',
       'justify-content': 'center',
@@ -31,6 +31,7 @@ const createBars = function(data, options, element) {
       'border': '1px solid black',
       'background-color': options.barColor,
     });
+    // set vertical alignment of value label
     switch(options.valueAlignment) {
       case 'bottom':
         bar.css('align-items', 'flex-end');
@@ -42,6 +43,8 @@ const createBars = function(data, options, element) {
       default:
         bar.css('align-items', 'flex-start');
     }
+    // add value label
+    bar.append($('<p>' + currentData + '</p>').css('margin', 0));
     bar.animate({'height': barHeight});
     bars.push(bar);
   }
