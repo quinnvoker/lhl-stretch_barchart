@@ -4,6 +4,7 @@ const defaultOptions = {
   valueAlignment: 'middle',
   barColor: 'grey',
   labelColor: 'grey',
+  tickScale: 5,
 }
 
 const dummyData = [
@@ -37,6 +38,7 @@ const drawBarChart = function(data, options, element) {
   element.css({
     'display': 'grid',
     'column-gap': options.spacing,
+    'grid-template-columns': '10px repeat(' + data.length + ', 1fr)',
   });
   let bars = []
   let labels = []
@@ -44,6 +46,7 @@ const drawBarChart = function(data, options, element) {
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
+  element.append(createTicks(options, 500));
   element.append(bars);
   element.append(labels);
 }
@@ -51,7 +54,7 @@ const drawBarChart = function(data, options, element) {
 const createLabel = function(data, options, index) {
   let label = $('<div class="label"></div>');
   label.css({
-    'grid-column': index + 1,
+    'grid-column': index + 2,
     'grid-row': 2,
     'text-align': 'center',
     'color': data.labelColor ? data.labelColor : options.labelColor,
@@ -65,7 +68,7 @@ const createBar = function(data, options, index){
   let bar = $('<div class="bar"></div>');
   // set up bar formatting
   bar.css({
-    'grid-column': index + 1,
+    'grid-column': index + 2,
     'grid-row': 1,
     'align-self': 'end',
     'height': barHeight,
@@ -89,4 +92,26 @@ const createBar = function(data, options, index){
   // add value label
   bar.append($('<p>' + data.value + '</p>').css('margin', 0));
   return bar;
+}
+
+const createTicks = function(options, height) {
+  let ticks = $('<div class="ticks"></div>');
+  ticks.css({
+    'position': 'relative',
+    'grid-column': 1,
+    'grid-row': 1,
+    'align-self': 'end',
+    'justify-self': 'end',
+  })
+  const count = height / (options.tickScale * options.pixelsPerUnit);
+  for(let i = 0; i < count; i++) {
+    let tick = $('<div class="tick">' + options.tickScale * i + '</div>');
+    tick.css({
+      'position': 'absolute',
+      'bottom': i * options.pixelsPerUnit * options.tickScale,
+      'left': 0,
+    });
+    ticks.append(tick);
+  }
+  return ticks;
 }
