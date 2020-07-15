@@ -38,7 +38,7 @@ const drawBarChart = function(data, options, element) {
   element.css({
     'display': 'grid',
     'column-gap': options.spacing,
-    'grid-template-columns': '10px repeat(' + data.length + ', 1fr)',
+    'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
   });
   let bars = []
   let labels = []
@@ -96,20 +96,22 @@ const createBar = function(data, options, index){
 
 const createTicks = function(options, height) {
   let ticks = $('<div class="ticks"></div>');
+  const count = height / (options.tickScale * options.pixelsPerUnit);
   ticks.css({
     'position': 'relative',
     'grid-column': 1,
     'grid-row': 1,
     'align-self': 'end',
     'justify-self': 'end',
+    'width': String(count * options.tickScale).length + 'ch'
   })
-  const count = height / (options.tickScale * options.pixelsPerUnit);
   for(let i = 0; i < count; i++) {
     let tick = $('<div class="tick">' + options.tickScale * i + '</div>');
     tick.css({
       'position': 'absolute',
       'bottom': i * options.pixelsPerUnit * options.tickScale,
-      'left': 0,
+      'right': 0,
+      'align-text': 'right',
     });
     ticks.append(tick);
   }
