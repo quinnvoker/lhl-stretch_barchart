@@ -1,11 +1,11 @@
 const defaultOptions = {
   maxValue: 20,
   pixelsPerUnit: 20,
+  tickFrequency: 5,
   spacing: 50,
   valueAlignment: 'middle',
   barColor: 'grey',
   labelColor: 'grey',
-  tickScale: 5,
 }
 
 const dummyData = [
@@ -65,14 +65,16 @@ const createLabel = function(data, options, index) {
 }
 
 const createBar = function(data, options, index){
-  const barHeight = options.pixelsPerUnit * data.value;
   let bar = $('<div class="bar"></div>');
+  // set bar size, and do not exceed chart maximum
+  let barLength = data.value < options.maxValue ? data.value : options.maxValue;
+  barLength *= options.pixelsPerUnit;
   // set up bar formatting
   bar.css({
     'grid-column': index + 2,
     'grid-row': 1,
     'align-self': 'end',
-    'height': barHeight,
+    'height': barLength,
     'display': 'flex',
     'justify-content': 'center',
     'border': '1px solid black',
@@ -97,21 +99,21 @@ const createBar = function(data, options, index){
 
 const createTicks = function(options) {
   let ticks = $('<div class="ticks"></div>');
-  const count = options.maxValue / options.tickScale;
+  const count = options.maxValue / options.tickFrequency;
   ticks.css({
     'position': 'relative',
     'grid-column': 1,
     'grid-row': 1,
     'align-self': 'end',
     'justify-self': 'end',
-    'width': String(count * options.tickScale).length + 'ch',
+    'width': String(count * options.tickFrequency).length + 'ch',
     'height': options.maxValue * options.pixelsPerUnit,
   })
   for(let i = 0; i <= count; i++) {
-    let tick = $('<div class="tick">' + options.tickScale * i + '</div>');
+    let tick = $('<div class="tick">' + options.tickFrequency * i + '</div>');
     tick.css({
       'position': 'absolute',
-      'bottom': i * options.pixelsPerUnit * options.tickScale,
+      'bottom': i * options.pixelsPerUnit * options.tickFrequency,
       'right': 0,
       'align-text': 'right',
     });
