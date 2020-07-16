@@ -1,4 +1,5 @@
 const defaultOptions = {
+  maxValue: 20,
   pixelsPerUnit: 20,
   spacing: 50,
   valueAlignment: 'middle',
@@ -46,7 +47,7 @@ const drawBarChart = function(data, options, element) {
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
-  element.append(createTicks(options, 500));
+  element.append(createTicks(options));
   element.append(bars);
   element.append(labels);
 }
@@ -94,18 +95,19 @@ const createBar = function(data, options, index){
   return bar;
 }
 
-const createTicks = function(options, height) {
+const createTicks = function(options) {
   let ticks = $('<div class="ticks"></div>');
-  const count = height / (options.tickScale * options.pixelsPerUnit);
+  const count = options.maxValue / options.tickScale;
   ticks.css({
     'position': 'relative',
     'grid-column': 1,
     'grid-row': 1,
     'align-self': 'end',
     'justify-self': 'end',
-    'width': String(count * options.tickScale).length + 'ch'
+    'width': String(count * options.tickScale).length + 'ch',
+    'height': options.maxValue * options.pixelsPerUnit,
   })
-  for(let i = 0; i < count; i++) {
+  for(let i = 0; i <= count; i++) {
     let tick = $('<div class="tick">' + options.tickScale * i + '</div>');
     tick.css({
       'position': 'absolute',
