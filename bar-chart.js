@@ -50,11 +50,10 @@ const drawBarChart = function(data, options, element) {
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
-  chart.append(createTicks(options, chart));
-  chart.append(bars);
-  chart.append(labels);
   chart.append(drawAxes(data));
   chart.append(drawRules(data, options));
+  chart.append(bars);
+  chart.append(labels);
 }
 
 const createLabel = function(data, options, index) {
@@ -101,46 +100,31 @@ const createBar = function(data, options, index){
   return bar;
 }
 
-const createTicks = function(options, element) {
-  let ticks = $('<div class="ticks"></div>');
-  const count = options.maxValue / options.tickFrequency;
-  ticks.css({
-    'position': 'relative',
-    'grid-column': 1,
-    'grid-row': 1,
-    'align-self': 'end',
-    'justify-self': 'end',
-    'width': String(count * options.tickFrequency).length + 'ch',
-    'height': options.maxValue * options.pixelsPerUnit,
-  })
-  for(let i = 0; i <= count; i++) {
-    let tick = $('<div class="tick">' + options.tickFrequency * i + '</div>');
-    tick.css({
-      'position': 'absolute',
-      'bottom': i * options.pixelsPerUnit * options.tickFrequency,
-      'right': 0,
-      'align-text': 'right',
-    });
-    ticks.append(tick);
-  }
-  return ticks;
-}
-
 const drawRules = function(data, options) {
-  let rules = $('<div class="rules"></div>');
   const count = options.maxValue / options.tickFrequency;
+  // create ruler container
+  let rules = $('<div class="rules"></div>');
   rules.css({
     'display': 'grid',
     'position': 'relative',
     'grid-template-columns': 'subgrid',
     'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
-    'align-self': 'end',
-    'justify-self': 'end',
     'height': options.maxValue * options.pixelsPerUnit,
   });
+  // create value marker container
+  let marks = $('<div class="measures"></div>');
+  marks.css({
+    'position': 'relative',
+    'grid-column': 1,
+    'grid-row': 1,
+    'align-self': 'center',
+    'justify-self': 'end',
+    'width': String(count * options.tickFrequency).length + 1 + 'ch',
+    'height': options.maxValue * options.pixelsPerUnit,
+  })
   for(let i = 0; i <= count; i++) {
-    // add rulers
+    // add ruler
     let rule = $('<div class="rule"></div>');
     rule.css({
       'position': 'absolute',
@@ -151,7 +135,17 @@ const drawRules = function(data, options) {
       'width': '100%',
     })
     rules.append(rule);
+    // add value marker
+    let mark = $('<div class="tick">' + options.tickFrequency * i + '</div>');
+    mark.css({
+      'position': 'absolute',
+      'bottom': i * options.pixelsPerUnit * options.tickFrequency,
+      'text-align': 'center',
+      'width': '100%',
+    });
+    marks.append(mark);
   }
+  rules.append(marks);
   return rules;
 }
 
