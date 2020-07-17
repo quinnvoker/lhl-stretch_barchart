@@ -36,7 +36,9 @@ $(document).ready(function() {
 });
 
 const drawBarChart = function(data, options, element) {
-  element.css({
+  let chart = $('<div class="chart"></div>');
+  element.append(chart);
+  chart.css({
     'display': 'grid',
     'position': 'relative',
     'column-gap': options.spacing,
@@ -48,10 +50,10 @@ const drawBarChart = function(data, options, element) {
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
-  element.append(createTicks(options, element));
-  element.append(bars);
-  element.append(labels);
-  element.append(drawAxes(data));
+  chart.append(createTicks(options, chart));
+  chart.append(bars);
+  chart.append(labels);
+  chart.append(drawAxes(data));
 }
 
 const createLabel = function(data, options, index) {
