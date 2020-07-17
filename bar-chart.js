@@ -38,8 +38,9 @@ $(document).ready(function() {
 const drawBarChart = function(data, options, element) {
   element.css({
     'display': 'grid',
+    'position': 'relative',
     'column-gap': options.spacing,
-    'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
+    'grid-template-columns': 'auto auto repeat(' + data.length + ', 1fr)',
   });
   let bars = []
   let labels = []
@@ -47,15 +48,16 @@ const drawBarChart = function(data, options, element) {
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
-  element.append(createTicks(options));
+  element.append(createTicks(options, element));
   element.append(bars);
   element.append(labels);
+  element.append(drawAxes(data));
 }
 
 const createLabel = function(data, options, index) {
   let label = $('<div class="label"></div>');
   label.css({
-    'grid-column': index + 2,
+    'grid-column': index + 3,
     'grid-row': 2,
     'text-align': 'center',
     'color': data.labelColor ? data.labelColor : options.labelColor,
@@ -71,7 +73,7 @@ const createBar = function(data, options, index){
   barLength *= options.pixelsPerUnit;
   // set up bar formatting
   bar.css({
-    'grid-column': index + 2,
+    'grid-column': index + 3,
     'grid-row': 1,
     'align-self': 'end',
     'height': barLength,
@@ -97,7 +99,7 @@ const createBar = function(data, options, index){
   return bar;
 }
 
-const createTicks = function(options) {
+const createTicks = function(options, element) {
   let ticks = $('<div class="ticks"></div>');
   const count = options.maxValue / options.tickFrequency;
   ticks.css({
@@ -118,6 +120,31 @@ const createTicks = function(options) {
       'align-text': 'right',
     });
     ticks.append(tick);
+    // add rulers
+    let rule = $('<div class="rule"></div>');
+    rule.css({
+      'position': 'absolute',
+      'height': 1,
+      'z-index': -1,
+      'bottom':  i * options.pixelsPerUnit * options.tickFrequency,
+      'border-top': i !== 0 ? '1px dotted black' : '',
+      'border-bottom': i === 0 ? '1px solid black' : '',
+      'width': element.width(),
+    })
+    ticks.append(rule);
   }
   return ticks;
+}
+
+const drawAxes = function(data) {
+  console.log(data.length)
+  let axes = $('<div class="axes"></div>');
+  axes.css({
+    'position': 'relative',
+    'grid-column-start': 1,
+    'grid-row': 1,
+    'border-left': '1px solid black',
+    'left': '100%',
+  });
+  return axes;
 }
