@@ -129,7 +129,7 @@ const drawRules = function(data, options) {
     rule.css({
       'position': 'absolute',
       'height': 0,
-      'z-index': -1,
+      'z-index': i === 0 ? 1 : -1,
       'bottom':  i * options.pixelsPerUnit * options.tickFrequency,
       'border-bottom': i === 0 ? '1px solid black' : '1px dotted black',
       'width': '100%',
