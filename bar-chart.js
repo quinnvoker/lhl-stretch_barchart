@@ -42,7 +42,7 @@ const drawBarChart = function(data, options, element) {
     'display': 'grid',
     'position': 'relative',
     'column-gap': options.spacing,
-    'grid-template-columns': 'auto auto repeat(' + data.length + ', 1fr)',
+    'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
   });
   let bars = []
   let labels = []
@@ -54,12 +54,13 @@ const drawBarChart = function(data, options, element) {
   chart.append(bars);
   chart.append(labels);
   chart.append(drawAxes(data));
+  chart.append(drawRules(data, options));
 }
 
 const createLabel = function(data, options, index) {
   let label = $('<div class="label"></div>');
   label.css({
-    'grid-column': index + 3,
+    'grid-column': index + 2,
     'grid-row': 2,
     'text-align': 'center',
     'color': data.labelColor ? data.labelColor : options.labelColor,
@@ -75,13 +76,12 @@ const createBar = function(data, options, index){
   barLength *= options.pixelsPerUnit;
   // set up bar formatting
   bar.css({
-    'grid-column': index + 3,
+    'grid-column': index + 2,
     'grid-row': 1,
     'align-self': 'end',
     'height': barLength,
     'display': 'flex',
     'justify-content': 'center',
-    'border': '1px solid black',
     'background-color': data.barColor ? data.barColor : options.barColor,
   });
   // set vertical alignment of value label
@@ -122,24 +122,40 @@ const createTicks = function(options, element) {
       'align-text': 'right',
     });
     ticks.append(tick);
-    // add rulers
-    let rule = $('<div class="rule"></div>');
-    rule.css({
-      'position': 'absolute',
-      'height': 1,
-      'z-index': -1,
-      'bottom':  i * options.pixelsPerUnit * options.tickFrequency,
-      'border-top': i !== 0 ? '1px dotted black' : '',
-      'border-bottom': i === 0 ? '1px solid black' : '',
-      'width': element.width(),
-    })
-    ticks.append(rule);
   }
   return ticks;
 }
 
+const drawRules = function(data, options) {
+  let rules = $('<div class="rules"></div>');
+  const count = options.maxValue / options.tickFrequency;
+  rules.css({
+    'display': 'grid',
+    'position': 'relative',
+    'grid-template-columns': 'subgrid',
+    'grid-column': '1 / ' + (data.length + 2),
+    'grid-row': 1,
+    'align-self': 'end',
+    'justify-self': 'end',
+    'height': options.maxValue * options.pixelsPerUnit,
+  });
+  for(let i = 0; i <= count; i++) {
+    // add rulers
+    let rule = $('<div class="rule"></div>');
+    rule.css({
+      'position': 'absolute',
+      'height': 0,
+      'z-index': -1,
+      'bottom':  i * options.pixelsPerUnit * options.tickFrequency,
+      'border-bottom': i === 0 ? '1px solid black' : '1px dotted black',
+      'width': '100%',
+    })
+    rules.append(rule);
+  }
+  return rules;
+}
+
 const drawAxes = function(data) {
-  console.log(data.length)
   let axes = $('<div class="axes"></div>');
   axes.css({
     'position': 'relative',
