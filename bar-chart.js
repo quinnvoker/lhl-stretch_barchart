@@ -12,7 +12,7 @@ const defaultOptions = {
 const dummyData = [
   {
     label: 'Water',
-    value: 4,
+    value: 20,
     barColor: 'blue',
   },
   {
@@ -45,9 +45,6 @@ const drawBarChart = function(data, options, element) {
     'column-gap': options.spacing,
     'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
   });
-  chart.append(drawAxes(data));
-  chart.append(createRules(data, options));
-  chart.append(createMarks(options));
   let bars = []
   let labels = []
   for(let i = 0; i < data.length; i++){
@@ -56,6 +53,9 @@ const drawBarChart = function(data, options, element) {
   }
   chart.append(bars);
   chart.append(labels);
+  chart.append(createMarks(data, options));
+  //chart.append(createRules(data, options));
+  chart.append(drawAxes(data));
 
   element.append(title);
   element.append(chart);
@@ -105,25 +105,26 @@ const createBar = function(data, options, index){
   return bar;
 }
 
-const createMarks = function(options) {
+const createMarks = function(data, options) {
   const count = options.maxValue / options.tickFrequency;
   let marks = $('<div class="measures"></div>');
   marks.css({
     'position': 'relative',
-    'grid-column': 1,
+    'display': 'grid',
+    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.tickFrequency + 'px)',
+    'grid-template-columns': 'subgrid',
+    'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
-    'align-self': 'center',
-    'justify-self': 'end',
-    'width': String(count * options.tickFrequency).length + 1 + 'ch',
-    'height': options.maxValue * options.pixelsPerUnit,
   });
   for(let i = 0; i <= count; i++) {
-    let mark = $('<div class="tick">' + options.tickFrequency * i + '</div>');
+    let mark = $('<div class="mark">' + (options.maxValue - i * options.tickFrequency) + '</div>');
     mark.css({
-      'position': 'absolute',
-      'bottom': i * options.pixelsPerUnit * options.tickFrequency,
+      'grid-row': i + 1,
+      'grid-column': 1,
+      'align-self': 'end',
       'text-align': 'center',
-      'width': '100%',
+      'width': String(count * options.tickFrequency).length + 1 + 'ch',
+      'height': '1em',
     });
     marks.append(mark);
   }
