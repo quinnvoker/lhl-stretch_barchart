@@ -2,7 +2,7 @@ const defaultOptions = {
   title: 'Bar Chart',
   maxValue: 20,
   pixelsPerUnit: 20,
-  tickFrequency: 5,
+  markFrequency: 5,
   spacing: 50,
   valueAlignment: 'middle',
   barColor: 'grey',
@@ -12,7 +12,7 @@ const defaultOptions = {
 const dummyData = [
   {
     label: 'Water',
-    value: 20,
+    value: 4,
     barColor: 'blue',
   },
   {
@@ -54,8 +54,7 @@ const drawBarChart = function(data, options, element) {
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
-  //chart.append(createRules(data, options));
-  chart.append(drawAxes(data));
+  chart.append(createYAxisLine());
 
   element.append(title);
   element.append(chart);
@@ -106,58 +105,42 @@ const createBar = function(data, options, index){
 }
 
 const createMarks = function(data, options) {
-  const count = options.maxValue / options.tickFrequency;
+  const count = options.maxValue / options.markFrequency;
   let marks = $('<div class="measures"></div>');
   marks.css({
     'position': 'relative',
     'display': 'grid',
-    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.tickFrequency + 'px)',
+    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.markFrequency + 'px)',
     'grid-template-columns': 'subgrid',
     'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
   });
   for(let i = 0; i <= count; i++) {
-    let mark = $('<div class="mark">' + (options.maxValue - i * options.tickFrequency) + '</div>');
+    let mark = $('<div class="mark">' + (options.maxValue - i * options.markFrequency) + '</div>');
     mark.css({
-      'grid-row': i + 1,
       'grid-column': 1,
+      'grid-row': i + 1,
       'align-self': 'end',
       'text-align': 'center',
-      'width': String(count * options.tickFrequency).length + 1 + 'ch',
+      'width': String(count * options.markFrequency).length + 1 + 'ch',
       'height': '1em',
+      'margin-bottom': '0.1em'
     });
     marks.append(mark);
+
+    let rule = $('<div class="rule"></div>');
+    rule.css({
+      'grid-column': '1 / ' + (data.length + 2),
+      'grid-row': i + 1,
+      'z-index': -1,
+      'border-bottom': i === count ? '1px solid black' : '1px dotted black',
+    });
+    marks.append(rule);
   }
   return marks;
 }
 
-const createRules = function(data, options) {
-  const count = options.maxValue / options.tickFrequency;
-  let rules = $('<div class="rules"></div>');
-  rules.css({
-    'display': 'grid',
-    'position': 'relative',
-    'grid-template-columns': 'subgrid',
-    'grid-column': '1 / ' + (data.length + 2),
-    'grid-row': 1,
-    'height': options.maxValue * options.pixelsPerUnit,
-  });
-  for(let i = 0; i <= count; i++) {
-    let rule = $('<div class="rule"></div>');
-    rule.css({
-      'position': 'absolute',
-      'height': 0,
-      'z-index': i === 0 ? 1 : -1,
-      'bottom':  i * options.pixelsPerUnit * options.tickFrequency,
-      'border-bottom': i === 0 ? '1px solid black' : '1px dotted black',
-      'width': '100%',
-    });
-    rules.append(rule);
-  }
-  return rules;
-}
-
-const drawAxes = function(data) {
+const createYAxisLine = function() {
   let axes = $('<div class="axes"></div>');
   axes.css({
     'position': 'relative',
