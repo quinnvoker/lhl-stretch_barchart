@@ -59,12 +59,14 @@ const drawBarChart = function(data, options, element) {
     'position': 'relative',
     'column-gap': options.spacing,
     'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
+    'align-items': 'end',
     'color': options.labelColor,
     'font-size': options.labelSize,
   });
   let bars = []
   let labels = []
   for(let i = 0; i < data.length; i++){
+    bars.push(createBar(data[i], options, i));
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
@@ -87,20 +89,19 @@ const createLabel = function(data, options, index) {
   return label;
 }
 
-const createBar = function(data, options, index){
+const createBar = function(barData, options, index){
   let bar = $('<div class="bar"></div>');
   // set bar size, and do not exceed chart maximum
-  let barLength = data.value < options.maxValue ? data.value : options.maxValue;
+  let barLength = barData.value < options.maxValue ? barData.value : options.maxValue;
   barLength *= options.pixelsPerUnit;
   // set up bar formatting
   bar.css({
     'grid-column': index + 2,
     'grid-row': 1,
-    'align-self': 'end',
     'height': barLength,
     'display': 'flex',
     'justify-content': 'center',
-    'background-color': data.barColor ? data.barColor : options.barColor,
+    'background-color': barData.barColor ? barData.barColor : options.barColor,
   });
   // set vertical alignment of value label
   switch(options.barValueAlign) {
@@ -115,7 +116,7 @@ const createBar = function(data, options, index){
       bar.css('align-items', 'flex-start');
   }
   // add value label
-  bar.append($('<p>' + data.value + '</p>').css('margin', 0));
+  bar.append($('<p>' + barData.value + '</p>').css('margin', 0));
   return bar;
 }
 
