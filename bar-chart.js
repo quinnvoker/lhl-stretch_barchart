@@ -1,4 +1,5 @@
 const defaultOptions = {
+  title: 'Bar Chart',
   maxValue: 20,
   pixelsPerUnit: 20,
   tickFrequency: 5,
@@ -36,24 +37,27 @@ $(document).ready(function() {
 });
 
 const drawBarChart = function(data, options, element) {
+  let title = $('<p>' + options.title + '</p>');
   let chart = $('<div class="chart"></div>');
-  element.append(chart);
   chart.css({
     'display': 'grid',
     'position': 'relative',
     'column-gap': options.spacing,
     'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
   });
+  chart.append(drawAxes(data));
+  chart.append(drawRules(data, options));
   let bars = []
   let labels = []
   for(let i = 0; i < data.length; i++){
     bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
-  chart.append(drawAxes(data));
-  chart.append(drawRules(data, options));
   chart.append(bars);
   chart.append(labels);
+
+  element.append(title);
+  element.append(chart);
 }
 
 const createLabel = function(data, options, index) {
