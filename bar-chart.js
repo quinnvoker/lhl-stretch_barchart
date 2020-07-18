@@ -68,7 +68,6 @@ const drawBarChart = function(data, options, element) {
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
-  chart.append(createYaxisStyle(options));
 
   element.append(title);
   element.append(chart);
@@ -124,11 +123,12 @@ const createMarks = function(data, options) {
   marks.css({
     'position': 'relative',
     'display': 'grid',
-    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.markFrequency + 'px)',
     'grid-template-columns': 'subgrid',
+    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.markFrequency + 'px)',
     'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
   });
+  const markWidth = String(count * options.markFrequency).length + 1 + 'ch'
   for(let i = 0; i <= count; i++) {
     let mark = $('<div class="mark">' + (options.maxValue - i * options.markFrequency) + '</div>');
     mark.css({
@@ -136,7 +136,7 @@ const createMarks = function(data, options) {
       'grid-row': i + 1,
       'align-self': 'end',
       'text-align': 'center',
-      'width': String(count * options.markFrequency).length + 1 + 'ch',
+      'width': markWidth,
       'height': '1em',
       'margin-bottom': '0.1em'
     });
@@ -151,17 +151,15 @@ const createMarks = function(data, options) {
     });
     marks.append(rule);
   }
-  return marks;
-}
 
-const createYaxisStyle = function(options) {
-  let axis = $('<div class="axes"></div>');
-  axis.css({
-    'position': 'relative',
-    'grid-column-start': 1,
-    'grid-row': 1,
-    'border-left': options.axisStyle,
-    'left': '100%',
+  let yAxis = $('<div class="y-axis"></div>');
+  yAxis.css({
+    'grid-column': 1,
+    'grid-row': '1 / ' + count + 2,
+    'border-right': options.axisStyle,
+    'width': markWidth
   });
-  return axis;
+  marks.append(yAxis);
+
+  return marks;
 }
