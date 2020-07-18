@@ -1,16 +1,16 @@
 const defaultOptions = {
-  title: 'Bar Chart',
+  title: '',
   titleSize: 'large',
   titleColor: 'black',
   titleAlign: 'left',
   maxValue: 20, // largest value to display within chart
   markFrequency: 5, // number of units between ticks on the y axis
-  pixelsPerUnit: 20,
+  pixelsPerUnit: 10,
   spacing: 50,
-  barColor: 'grey',
-  barValueAlign: 'middle',
+  barColor: 'grey', // color for any bars that don't have their colour set by data
+  barValueAlign: 'middle', // vertical alignment of value labels in bars
   labelSize: 'medium', // font size to use for value markers and bar labels
-  labelColor: 'black',
+  labelColor: 'black', // default colour for all text in the chart
   axisStyle: '1px solid black', // style for axis lines, uses 'border' format
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
 }
@@ -43,12 +43,15 @@ $(document).ready(function() {
 });
 
 const drawBarChart = function(data, options, element) {
-  let title = $('<p>' + options.title + '</p>');
-  title.css({
-    'font-size': options.titleSize,
-    'color': options.titleColor,
-    'text-align': options.titleAlign,
-  });
+  if(options.title) {
+    let title = $('<p>' + options.title + '</p>');
+    title.css({
+      'font-size': options.titleSize,
+      'color': options.titleColor,
+      'text-align': options.titleAlign,
+    });
+    element.append(title);
+  }
 
   let chart = $('<div class="chart"></div>');
   chart.css({
@@ -69,7 +72,6 @@ const drawBarChart = function(data, options, element) {
   chart.append(labels);
   chart.append(createMarks(data, options));
 
-  element.append(title);
   element.append(chart);
 }
 
