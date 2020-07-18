@@ -9,8 +9,10 @@ const defaultOptions = {
   spacing: 50,
   barColor: 'grey',
   barValueAlign: 'middle',
-  labelSize: 'medium',
+  labelSize: 'medium', // font size to use for value markers and bar labels
   labelColor: 'black',
+  axisStyle: '1px solid black', // style for axis lines, uses 'border' format
+  ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
 }
 
 const dummyData = [
@@ -66,7 +68,7 @@ const drawBarChart = function(data, options, element) {
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
-  chart.append(createYAxisLine(options));
+  chart.append(createYaxisStyle(options));
 
   element.append(title);
   element.append(chart);
@@ -144,21 +146,21 @@ const createMarks = function(data, options) {
     rule.css({
       'grid-column': '1 / ' + (data.length + 2),
       'grid-row': i + 1,
-      'z-index': -1,
-      'border-bottom': i === count ? '1px solid black' : '1px dotted black',
+      'z-index': i !== count ? -1 : 1,
+      'border-bottom': i !== count ? options.ruleStyle : options.axisStyle,
     });
     marks.append(rule);
   }
   return marks;
 }
 
-const createYAxisLine = function(options) {
+const createYaxisStyle = function(options) {
   let axis = $('<div class="axes"></div>');
   axis.css({
     'position': 'relative',
     'grid-column-start': 1,
     'grid-row': 1,
-    'border-left': '1px solid black',
+    'border-left': options.axisStyle,
     'left': '100%',
   });
   return axis;
