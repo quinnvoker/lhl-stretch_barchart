@@ -1,12 +1,16 @@
 const defaultOptions = {
   title: 'Bar Chart',
-  maxValue: 20,
+  titleSize: 'large',
+  titleColor: 'black',
+  titleAlign: 'left',
+  maxValue: 20, // largest value to display within chart
+  markFrequency: 5, // number of units between ticks on the y axis
   pixelsPerUnit: 20,
-  markFrequency: 5,
   spacing: 50,
-  valueAlignment: 'middle',
   barColor: 'grey',
-  labelColor: 'grey',
+  barValueAlign: 'middle',
+  labelSize: 'medium',
+  labelColor: 'black',
 }
 
 const dummyData = [
@@ -38,12 +42,20 @@ $(document).ready(function() {
 
 const drawBarChart = function(data, options, element) {
   let title = $('<p>' + options.title + '</p>');
+  title.css({
+    'font-size': options.titleSize,
+    'color': options.titleColor,
+    'text-align': options.titleAlign,
+  });
+
   let chart = $('<div class="chart"></div>');
   chart.css({
     'display': 'grid',
     'position': 'relative',
     'column-gap': options.spacing,
     'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
+    'color': options.labelColor,
+    'font-size': options.labelSize,
   });
   let bars = []
   let labels = []
@@ -54,7 +66,7 @@ const drawBarChart = function(data, options, element) {
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
-  chart.append(createYAxisLine());
+  chart.append(createYAxisLine(options));
 
   element.append(title);
   element.append(chart);
@@ -66,7 +78,7 @@ const createLabel = function(data, options, index) {
     'grid-column': index + 2,
     'grid-row': 2,
     'text-align': 'center',
-    'color': data.labelColor ? data.labelColor : options.labelColor,
+    'color': data.labelColor,
   });
   label.append(data.label);
   return label;
@@ -88,7 +100,7 @@ const createBar = function(data, options, index){
     'background-color': data.barColor ? data.barColor : options.barColor,
   });
   // set vertical alignment of value label
-  switch(options.valueAlignment) {
+  switch(options.barValueAlign) {
     case 'bottom':
       bar.css('align-items', 'flex-end');
       break;
@@ -140,14 +152,14 @@ const createMarks = function(data, options) {
   return marks;
 }
 
-const createYAxisLine = function() {
-  let axes = $('<div class="axes"></div>');
-  axes.css({
+const createYAxisLine = function(options) {
+  let axis = $('<div class="axes"></div>');
+  axis.css({
     'position': 'relative',
     'grid-column-start': 1,
     'grid-row': 1,
     'border-left': '1px solid black',
     'left': '100%',
   });
-  return axes;
+  return axis;
 }
