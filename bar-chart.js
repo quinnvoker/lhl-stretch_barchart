@@ -1,6 +1,6 @@
 const drawBarChart = function(data, options, element) {
   if(options.title) {
-    let title = $('<p>' + options.title + '</p>');
+    let title = $('<p class="title">' + options.title + '</p>');
     title.css({
       'font-size': options.titleSize,
       'color': options.titleColor,
