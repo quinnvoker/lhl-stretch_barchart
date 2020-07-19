@@ -14,7 +14,7 @@ const drawBarChart = function(data, options, element) {
     'display': 'grid',
     'position': 'relative',
     'column-gap': options.spacing,
-    'grid-template-columns': 'auto repeat(' + data.length + ', 1fr)',
+    'grid-template-columns': String(options.maxValue).length + 1 + 'ch' + ' repeat(' + data.length + ', 1fr)',
     'align-items': 'end',
     'color': options.labelColor,
     'font-size': options.labelSize,
@@ -120,7 +120,7 @@ const createMarks = function(data, options) {
     'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
   });
-  const markWidth = String(count * options.markFrequency).length + 1 + 'ch'
+  const markWidth = String(options.maxValue).length + 1 + 'ch'
   for(let i = 0; i <= count; i++) {
     let mark = $('<div class="mark">' + (options.maxValue - i * options.markFrequency) + '</div>');
     mark.css({
@@ -133,7 +133,7 @@ const createMarks = function(data, options) {
       'margin-bottom': '0.1em'
     });
     marks.append(mark);
-
+    // add ruler line under mark
     let rule = $('<div class="rule"></div>');
     rule.css({
       'grid-column': '1 / ' + (data.length + 2),
@@ -143,7 +143,7 @@ const createMarks = function(data, options) {
     });
     marks.append(rule);
   }
-
+  // add y axis line
   let yAxis = $('<div class="y-axis"></div>');
   yAxis.css({
     'grid-column': 1,
