@@ -115,19 +115,19 @@ const createMultiLabel = function(barDataArray, options, index) {
 }
 
 const createMarks = function(data, options) {
-  const count = options.maxValue / options.markFrequency;
+  const count = options.maxValue / options.markInterval;
   let marks = $('<div class="measures"></div>');
   marks.css({
     'position': 'relative',
     'display': 'grid',
     'grid-template-columns': 'subgrid',
-    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.markFrequency + 'px)',
+    'grid-template-rows': '1em repeat(' + (count) + ', ' + options.pixelsPerUnit * options.markInterval + 'px)',
     'grid-column': '1 / ' + (data.length + 2),
     'grid-row': 1,
   });
   const markWidth = String(options.maxValue).length + 1 + 'ch'
   for(let i = 0; i <= count; i++) {
-    let mark = $('<div class="mark">' + (options.maxValue - i * options.markFrequency) + '</div>');
+    let mark = $('<div class="mark">' + (options.maxValue - i * options.markInterval) + '</div>');
     mark.css({
       'grid-column': 1,
       'grid-row': i + 1,

@@ -1,7 +1,7 @@
 const demoOptions = {
   pixelsPerUnit: 16,
   maxValue: 15, // largest value to display within chart
-  markFrequency: 5, // number of units between ticks on the y axis
+  markInterval: 5, // number of units between ticks on the y axis
   spacing: 0,
   title: 'Strength of the Bending Nations',
   titleSize: 'large',
@@ -13,29 +13,30 @@ const demoOptions = {
   labelColor: 'black', // default colour for all text in the chart
   axisStyle: '1px solid black', // style for axis lines, uses 'border' format
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
+  animated: 'true', // enable animation for the chart
 }
 
 const demoOptionsMulti = {
   pixelsPerUnit: 16,
-  maxValue: 15, // largest value to display within chart
-  markFrequency: 5, // number of units between ticks on the y axis
+  maxValue: 15,
+  markInterval: 5,
   spacing: 20,
   title: 'Strength of the Bending Nations (Allied)',
   titleSize: 'large',
   titleColor: 'black',
   titleAlign: 'left',
-  barColor: 'grey', // color for any bars that don't have their colour set by data
-  barValueAlign: 'middle', // vertical alignment of value labels in bars
-  labelSize: 'medium', // font size to use for value markers and bar labels
-  labelColor: 'black', // default colour for all text in the chart
-  axisStyle: '1px solid black', // style for axis lines, uses 'border' format
-  ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
+  barColor: 'grey',
+  barValueAlign: 'middle',
+  labelSize: 'medium',
+  labelColor: 'black',
+  axisStyle: '1px solid black',
+  ruleStyle: '1px dotted black',
 }
 
 const demoOptionsThird = {
   pixelsPerUnit: 1,
   maxValue: 300,
-  markFrequency: 25,
+  markInterval: 25,
   spacing: 10,
   title: 'My Steam Library Playtimes (Hours)',
   titleSize: 'x-large',
@@ -75,7 +76,7 @@ const demoData = [
 const demoDataMulti = [
   [
     {
-      label: 'Water',
+      //label: 'Water',
       value: 4,
       barColor: 'deepskyblue',
       labelColor: 'deepskyblue',
