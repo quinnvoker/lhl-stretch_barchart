@@ -3,8 +3,8 @@ Created as a part of Lighthouse Labs' prep course stretch goals, this library al
 
 This is my first attempt to seriously work with HTML and CSS to accomplish a particular goal without direct instruction, and it was quite a learning process! There are some things I'd still like to improve, but I'd consider it a success.
 
-![images/barchart.png](Bar Chart example)
-![images/multibar.png](Multi-Bar Chart example)
+![Bar Chart Example](images/barchart.png) 
+![Multi-Bar Chart example](images/multibar.png)
 
 ## How to use
 
