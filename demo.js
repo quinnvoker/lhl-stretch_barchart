@@ -78,7 +78,7 @@ const demoData = [
 const demoDataMulti = [
   [
     {
-      //label: 'Water',
+      label: 'Water',
       value: 4,
       barColor: 'deepskyblue',
       labelColor: 'deepskyblue',
