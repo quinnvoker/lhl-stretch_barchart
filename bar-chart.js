@@ -69,6 +69,7 @@ const createBar = function(barData, options, index) {
     'display': 'flex',
     'justify-content': 'center',
     'background-color': barData.barColor ? barData.barColor : options.barColor,
+    'z-index': 1
   });
   // set vertical alignment of value label
   switch(options.barValueAlign) {
@@ -93,6 +94,7 @@ const createMultiBar = function(barDataArray, options, index) {
   multiBar.css({
     'grid-column': index + 2,
     'grid-row': 1,
+    'z-index': 1
   });
   for(let barData of barDataArray) {
     multiBar.append(createBar(barData, options, index))
@@ -133,7 +135,8 @@ const createMarks = function(data, options) {
       'text-align': 'center',
       'width': markWidth,
       'height': '1em',
-      'margin-bottom': '0.1em'
+      'margin-bottom': '0.2em',
+      'z-index': 1
     });
     marks.append(mark);
     // add ruler line under mark
@@ -141,7 +144,7 @@ const createMarks = function(data, options) {
     rule.css({
       'grid-column': '1 / ' + (data.length + 2),
       'grid-row': i + 1,
-      'z-index': i !== count ? -1 : 1,
+      'z-index': i !== count ? 0 : 2,
       'border-bottom': i !== count ? options.ruleStyle : options.axisStyle,
     });
     marks.append(rule);
@@ -152,7 +155,8 @@ const createMarks = function(data, options) {
     'grid-column': 1,
     'grid-row': '1 / ' + count + 2,
     'border-right': options.axisStyle,
-    'width': markWidth
+    'width': markWidth,
+    'z-index': 1
   });
   marks.append(yAxis);
 
