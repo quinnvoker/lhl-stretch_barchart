@@ -38,8 +38,33 @@ const dummyData = [
   }
 ]
 
+const dummyDataMulti = [
+  [
+    {
+      label: 'Water',
+      value: 4,
+      barColor: 'blue',
+    },
+    {
+      label: 'Earth',
+      value: 10,
+      barColor: 'green',
+    },
+    {
+      label: 'Air',
+      value: 1,
+      labelColor: 'red',
+    },
+  ],
+  {
+    label: 'Fire',
+    value: 15,
+    barColor: 'red',
+  },
+]
+
 $(document).ready(function() {
-  drawBarChart(dummyData, defaultOptions, $('.bar-chart'));
+  drawBarChart(dummyDataMulti, defaultOptions, $('.bar-chart'));
 });
 
 const drawBarChart = function(data, options, element) {
@@ -66,15 +91,20 @@ const drawBarChart = function(data, options, element) {
   let bars = []
   let labels = []
   for(let i = 0; i < data.length; i++){
-    bars.push(createBar(data[i], options, i));
-    labels.push(createLabel(data[i], options, i));
+    const currentData = data[i];
+    if(Array.isArray(currentData)){
+      bars.push(createMultiBar(currentData, options, i));
+      labels.push(createMultiLabel(currentData, options, i));
+    } else {
+      bars.push(createBar(currentData, options, i));
+      labels.push(createLabel(currentData, options, i));
+    }
   }
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
 
-  chart.append(createMultiBar(data, options, data.length));
-  chart.append(createMultiLabel(data, options, data.length));
+  animateBars(bars);
 
   element.append(chart);
 }
@@ -193,4 +223,27 @@ const createMarks = function(data, options) {
   marks.append(yAxis);
 
   return marks;
+}
+
+/*
+  tried to figure out a way to make this function less repetitive,
+  but I couldn't figure out how to write a helper function that
+  could apply the animation to individual bar elements and be
+  passable to the each function
+*/
+const animateBars = function(bars) {
+  for(let bar of bars) {
+    if(bar.hasClass('multi-bar')){
+      bar.children().each(function() {
+        let child = $(this);
+        const barHeight = child.height();
+        child.height(0);
+        child.animate({'height': barHeight});
+      });
+    } else {
+      const barHeight = bar.height();
+      bar.height(0);
+      bar.animate({'height': barHeight});
+    }
+  }
 }
