@@ -35,12 +35,13 @@ const drawBarChart = function(data, options, element) {
   chart.append(labels);
   chart.append(createMarks(data, options));
 
-  animateBars(bars);
-
-  element.append(chart);
-  element.click(function() {
+  if(options.animated){
     animateBars(bars);
-  });
+    element.click(function() {
+      animateBars(bars);
+    });
+  }
+  element.append(chart);
 }
 
 const createLabel = function(data, options, index) {

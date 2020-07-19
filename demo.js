@@ -13,7 +13,7 @@ const demoOptions = {
   labelColor: 'black', // default colour for all text in the chart
   axisStyle: '1px solid black', // style for axis lines, uses 'border' format
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
-  animated: 'true', // enable animation for the chart
+  animated: true, // enable animation for the chart
 }
 
 const demoOptionsMulti = {
@@ -31,6 +31,7 @@ const demoOptionsMulti = {
   labelColor: 'black',
   axisStyle: '1px solid black',
   ruleStyle: '1px dotted black',
+  animated: true,
 }
 
 const demoOptionsThird = {
@@ -48,6 +49,7 @@ const demoOptionsThird = {
   labelColor: 'white',
   axisStyle: '2px solid white',
   ruleStyle: '1px solid grey',
+  animated: true,
 }
 
 const demoData = [
