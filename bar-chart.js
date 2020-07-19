@@ -5,7 +5,7 @@ const defaultOptions = {
   titleAlign: 'left',
   maxValue: 20, // largest value to display within chart
   markFrequency: 5, // number of units between ticks on the y axis
-  pixelsPerUnit: 10,
+  pixelsPerUnit: 16,
   spacing: 50,
   barColor: 'grey', // color for any bars that don't have their colour set by data
   barValueAlign: 'middle', // vertical alignment of value labels in bars
@@ -19,17 +19,17 @@ const dummyData = [
   {
     label: 'Water',
     value: 4,
-    barColor: 'blue',
+    barColor: 'deepskyblue',
   },
   {
     label: 'Earth',
     value: 10,
-    barColor: 'green',
+    barColor: 'forestgreen',
   },
   {
     label: 'Fire',
     value: 15,
-    barColor: 'red',
+    barColor: 'crimson',
   },
   {
     label: 'Air',
@@ -43,23 +43,27 @@ const dummyDataMulti = [
     {
       label: 'Water',
       value: 4,
-      barColor: 'blue',
+      barColor: 'deepskyblue',
+      labelColor: 'deepskyblue',
     },
     {
       label: 'Earth',
       value: 10,
-      barColor: 'green',
+      barColor: 'forestgreen',
+      labelColor: 'forestgreen',
     },
     {
       label: 'Air',
       value: 1,
-      labelColor: 'red',
+      barColor: 'orange',
+      labelColor: 'orange',
     },
   ],
   {
     label: 'Fire',
     value: 15,
-    barColor: 'red',
+    barColor: 'crimson',
+    labelColor: 'crimson'
   },
 ]
 
@@ -149,7 +153,7 @@ const createBar = function(barData, options, index) {
       bar.css('align-items', 'flex-start');
   }
   // add value label
-  bar.append($('<p>' + barData.value + '</p>').css('margin', 0));
+  bar.append($('<p>' + barData.value + '</p>').css({'margin': 0}));
   return bar;
 }
 
