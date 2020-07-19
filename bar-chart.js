@@ -67,12 +67,14 @@ const drawBarChart = function(data, options, element) {
   let labels = []
   for(let i = 0; i < data.length; i++){
     bars.push(createBar(data[i], options, i));
-    bars.push(createBar(data[i], options, i));
     labels.push(createLabel(data[i], options, i));
   }
   chart.append(bars);
   chart.append(labels);
   chart.append(createMarks(data, options));
+
+  chart.append(createMultiBar(data, options, data.length));
+  chart.append(createMultiLabel(data, options, data.length));
 
   element.append(chart);
 }
@@ -82,6 +84,7 @@ const createLabel = function(data, options, index) {
   label.css({
     'grid-column': index + 2,
     'grid-row': 2,
+    'align-self': 'start',
     'text-align': 'center',
     'color': data.labelColor,
   });
@@ -89,7 +92,7 @@ const createLabel = function(data, options, index) {
   return label;
 }
 
-const createBar = function(barData, options, index){
+const createBar = function(barData, options, index) {
   let bar = $('<div class="bar"></div>');
   // set bar size, and do not exceed chart maximum
   let barLength = barData.value < options.maxValue ? barData.value : options.maxValue;
@@ -118,6 +121,31 @@ const createBar = function(barData, options, index){
   // add value label
   bar.append($('<p>' + barData.value + '</p>').css('margin', 0));
   return bar;
+}
+
+// note: single bars do not exceed maximum value of chart, but a multibar can
+const createMultiBar = function(barDataArray, options, index) {
+  let multiBar = $('<div class="multi-bar"></div>');
+  multiBar.css({
+    'grid-column': index + 2,
+    'grid-row': 1,
+  });
+  for(let barData of barDataArray) {
+    multiBar.append(createBar(barData, options, index))
+  }
+  return multiBar;
+}
+
+const createMultiLabel = function(barDataArray, options, index) {
+  let multiLabel = $('<div class="multi-label"></div>');
+  multiLabel.css({
+    'grid-column': index + 2,
+    'grid-row': 2,
+  });
+  for(let barData of barDataArray) {
+    multiLabel.append(createLabel(barData, options, index))
+  }
+  return multiLabel;
 }
 
 const createMarks = function(data, options) {
