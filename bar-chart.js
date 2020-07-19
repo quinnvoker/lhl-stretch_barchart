@@ -225,25 +225,20 @@ const createMarks = function(data, options) {
   return marks;
 }
 
-/*
-  tried to figure out a way to make this function less repetitive,
-  but I couldn't figure out how to write a helper function that
-  could apply the animation to individual bar elements and be
-  passable to the each function
-*/
 const animateBars = function(bars) {
   for(let bar of bars) {
     if(bar.hasClass('multi-bar')){
       bar.children().each(function() {
-        let child = $(this);
-        const barHeight = child.height();
-        child.height(0);
-        child.animate({'height': barHeight});
+        growBar($(this));
       });
     } else {
-      const barHeight = bar.height();
-      bar.height(0);
-      bar.animate({'height': barHeight});
+      growBar(bar);
     }
   }
+}
+
+const growBar = function(bar){
+  const barHeight = bar.height();
+  bar.height(0);
+  bar.animate({'height': barHeight});
 }
