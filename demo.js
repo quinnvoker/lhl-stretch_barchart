@@ -15,7 +15,7 @@ const demoOptions = {
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
 }
 
-let demoOptionsMulti = {
+const demoOptionsMulti = {
   pixelsPerUnit: 16,
   maxValue: 20, // largest value to display within chart
   markFrequency: 5, // number of units between ticks on the y axis
@@ -30,6 +30,23 @@ let demoOptionsMulti = {
   labelColor: 'black', // default colour for all text in the chart
   axisStyle: '1px solid black', // style for axis lines, uses 'border' format
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
+}
+
+const demoOptionsThird = {
+  pixelsPerUnit: 1,
+  maxValue: 300,
+  markFrequency: 25,
+  spacing: 10,
+  title: 'My Steam Library Playtimes (Hours)',
+  titleSize: 'x-large',
+  titleColor: 'white',
+  titleAlign: 'center',
+  barColor: 'dodgerblue',
+  barValueAlign: 'top',
+  labelSize: 'small',
+  labelColor: 'white',
+  axisStyle: '2px solid white',
+  ruleStyle: '1px solid grey',
 }
 
 const demoData = [
@@ -84,7 +101,55 @@ const demoDataMulti = [
   },
 ]
 
+const demoDataThird = [
+  {
+    label: 'Team Fortress 2',
+    value: 297,
+  },
+  {
+    label: 'The Elder Scrolls V: Skyrim',
+    value: 205,
+    barColor: 'seagreen',
+  },
+  {
+    label: 'Monster Hunter: World',
+    value: 202,
+  },
+  {
+    label: 'Spiral Knights',
+    value: 159,
+  },
+  {
+    label: 'Dark Souls: Prepare To Die Edition',
+    value: 158,
+  },
+  {
+    label: 'Ultra Street Fighter IV',
+    value: 151,
+  },
+  {
+    label: 'Dragon Age: Origins',
+    value: 127,
+    barColor: 'seagreen',
+  },
+  {
+    label: 'Slay the Spire',
+    value: 87,
+    barColor: 'seagreen',
+  },
+  {
+    label: 'Terraria',
+    value: 77,
+    barColor: 'seagreen',
+  },
+  {
+    label: 'Risk of Rain',
+    value: 74,
+  }
+]
+
 $(document).ready(function() {
   drawBarChart(demoData, demoOptions, $('.bar-chart'));
   drawBarChart(demoDataMulti, demoOptionsMulti, $('.bar-chart-multi'));
+  drawBarChart(demoDataThird, demoOptionsThird, $('.bar-chart-third'))
 });
