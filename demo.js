@@ -1,8 +1,8 @@
 const demoOptions = {
   pixelsPerUnit: 16,
-  maxValue: 20, // largest value to display within chart
+  maxValue: 15, // largest value to display within chart
   markFrequency: 5, // number of units between ticks on the y axis
-  spacing: 20,
+  spacing: 0,
   title: 'Strength of the Bending Nations',
   titleSize: 'large',
   titleColor: 'black',
@@ -17,7 +17,7 @@ const demoOptions = {
 
 const demoOptionsMulti = {
   pixelsPerUnit: 16,
-  maxValue: 20, // largest value to display within chart
+  maxValue: 15, // largest value to display within chart
   markFrequency: 5, // number of units between ticks on the y axis
   spacing: 20,
   title: 'Strength of the Bending Nations (Allied)',
