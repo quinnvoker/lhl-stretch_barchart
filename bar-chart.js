@@ -38,6 +38,9 @@ const drawBarChart = function(data, options, element) {
   animateBars(bars);
 
   element.append(chart);
+  element.click(function() {
+    animateBars(bars);
+  });
 }
 
 const createLabel = function(data, options, index) {
@@ -169,6 +172,9 @@ const animateBars = function(bars) {
 }
 
 const growBar = function(bar){
+  if(bar.is(':animated')) {
+    return;
+  }
   const barHeight = bar.height();
   bar.height(0);
   bar.animate({'height': barHeight});
