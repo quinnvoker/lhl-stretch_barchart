@@ -55,6 +55,7 @@ The `element` parameter represents the DOM element you wish to add the chart to.
 
  - If a chart's `maxValue` is not evenly divisible by its `markInterval`, the chart will not render its vertical ticks properly.
  - If `pixelsPerUnit` and `markInterval` are too small, vertical tick labels will overlap and become unreadable
+ - While individual bars cannot exceed the maximum height of the chart, multi-bars are not accounted for and can stretch far beyond the chart.
  - The subgrid used to render the horizontal rules in the chart has columns that match the main grid in Firefox but not in Chrome. This does not currently have any negative impact on chart display, but it may cause unforeseen issues.
 
 ## Features to be Implemented
