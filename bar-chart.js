@@ -42,7 +42,7 @@ const drawBarChart = function(data, options, element) {
     });
   }
   element.append(chart);
-}
+};
 
 const createLabel = function(data, options, index) {
   let label = $('<div class="label"></div>');
@@ -55,7 +55,7 @@ const createLabel = function(data, options, index) {
   });
   label.append(data.label);
   return label;
-}
+};
 
 const createBar = function(barData, options, index) {
   let bar = $('<div class="bar"></div>');
@@ -87,7 +87,7 @@ const createBar = function(barData, options, index) {
   // add value label
   bar.append($('<p>' + barData.value + '</p>').css({'margin': 0}));
   return bar;
-}
+};
 
 // note: single bars do not exceed maximum value of chart, but a multibar can
 const createMultiBar = function(barDataArray, options, index) {
@@ -101,7 +101,7 @@ const createMultiBar = function(barDataArray, options, index) {
     multiBar.append(createBar(barData, options, index))
   }
   return multiBar;
-}
+};
 
 const createMultiLabel = function(barDataArray, options, index) {
   let multiLabel = $('<div class="multi-label"></div>');
@@ -113,7 +113,7 @@ const createMultiLabel = function(barDataArray, options, index) {
     multiLabel.append(createLabel(barData, options, index))
   }
   return multiLabel;
-}
+};
 
 const createMarks = function(data, options) {
   const count = options.maxValue / options.markInterval;
@@ -162,7 +162,7 @@ const createMarks = function(data, options) {
   marks.append(yAxis);
 
   return marks;
-}
+};
 
 const animateBars = function(bars) {
   for(let bar of bars) {
@@ -174,7 +174,7 @@ const animateBars = function(bars) {
       growBar(bar);
     }
   }
-}
+};
 
 const growBar = function(bar){
   if(bar.is(':animated')) {
@@ -183,4 +183,4 @@ const growBar = function(bar){
   const barHeight = bar.height();
   bar.height(0);
   bar.animate({'height': barHeight});
-}
+};

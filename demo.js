@@ -14,7 +14,7 @@ const demoOptions = {
   axisStyle: '1px solid black', // style for axis lines, uses 'border' format
   ruleStyle: '1px dotted black', // style for rule lines, uses 'border' format
   animated: true, // enable animation for the chart
-}
+};
 
 const demoOptionsMulti = {
   pixelsPerUnit: 16,
@@ -32,7 +32,7 @@ const demoOptionsMulti = {
   axisStyle: '1px solid black',
   ruleStyle: '1px dotted black',
   animated: true,
-}
+};
 
 const demoOptionsThird = {
   pixelsPerUnit: 1,
@@ -50,7 +50,7 @@ const demoOptionsThird = {
   axisStyle: '2px solid white',
   ruleStyle: '1px solid grey',
   animated: true,
-}
+};
 
 const demoData = [
   {
@@ -73,7 +73,7 @@ const demoData = [
     value: 1,
     labelColor: 'red',
   }
-]
+];
 
 const demoDataMulti = [
   [
@@ -102,7 +102,7 @@ const demoDataMulti = [
     barColor: 'crimson',
     labelColor: 'crimson'
   },
-]
+];
 
 const demoDataThird = [
   {
@@ -149,7 +149,7 @@ const demoDataThird = [
     label: 'Risk of Rain',
     value: 74,
   }
-]
+];
 
 $(document).ready(function() {
   drawBarChart(demoData, demoOptions, $('.bar-chart'));
